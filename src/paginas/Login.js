@@ -4,7 +4,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -15,6 +14,8 @@ import IconButton from "@mui/material/IconButton";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleIcon from "@mui/icons-material/Google";
 import getFirebase from "../firebase/firebaseconfiguration";
+import { GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -37,7 +38,8 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn(props) {
-  const firebaseInstance = getFirebase();
+  const google = new GoogleAuthProvider();
+  const facebook = new FacebookAuthProvider();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -69,7 +71,7 @@ export default function SignIn(props) {
           </Typography>
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            onSubmit={props.loginSubmit}
             noValidate
             sx={{ mt: 1 }}
           >
@@ -106,19 +108,21 @@ export default function SignIn(props) {
               Sign In
             </Button>
             <IconButton>
-              <FacebookIcon />
+              <FacebookIcon
+                id={"facebookBtn"}
+                onClick={(e) => props.socialLogin(facebook)}
+              />
             </IconButton>
             <IconButton>
-              <GoogleIcon />
+              <GoogleIcon
+                id={"googleBtn"}
+                onClick={(e) => props.socialLogin(google)}
+              />
             </IconButton>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
+              <Grid item xs></Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link to="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

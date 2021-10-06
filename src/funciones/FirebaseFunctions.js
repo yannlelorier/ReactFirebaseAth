@@ -9,7 +9,7 @@ export default function FirebaseFunctions(props) {
     currentUser,
     getCurrentUser: (params) => {
       console.log(params);
-      setCurrentUser("rayadelgadoruben@gmail.com");
+      setCurrentUser(params);
     }
   };
 }

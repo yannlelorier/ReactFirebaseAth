@@ -13,7 +13,7 @@ export default function App(props) {
         if (authUser) {
           getCurrentUser(authUser.email);
         } else {
-          getCurrentUser("Cargando...");
+          getCurrentUser(null);
         }
       });
     }

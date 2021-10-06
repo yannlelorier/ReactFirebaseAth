@@ -1,33 +1,24 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import Logout from "./Logout";
 import SignUp from "./Signup";
 import Login from "./Login";
 import getFirebase from "../firebase/firebaseconfiguration";
-import { GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
 
 export default function Navigate(props) {
   const firebase = getFirebase();
 
-  const socialLoginGoogle = async (props) => {
+  const socialLogin = async (props) => {
     await firebase
       .auth()
-      .signInWithPopup(GoogleAuthProvider)
+      .signInWithPopup(props)
       .then((result) => {
         console.log(result);
       })
-      .catch((error) => {});
-  };
-
-  const socialLoginFacebook = async (props) => {
-    await firebase
-      .auth()
-      .signInWithPopup(FacebookAuthProvider)
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((error) => {});
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 
   const signOut = async () => {
@@ -37,7 +28,7 @@ export default function Navigate(props) {
         alert("Successfully signed out!");
       }
     } catch (error) {
-      console.log("error", error);
+      alert(error.message);
     }
     props.history.push("/");
   };
@@ -56,7 +47,9 @@ export default function Navigate(props) {
         //console.log("user", user);
         props.history.push("/");
       }
-    } catch (error) {}
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const signupSubmit = async (event) => {
@@ -74,65 +67,62 @@ export default function Navigate(props) {
         console.log("user", user);
       }
     } catch (error) {
-      console.log("error", error);
+      alert(error.message);
     }
   };
 
   return (
     <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to="/">LoginUser</Link>
-          </li>
-          <li>
-            <Link to="/signup">Signup</Link>
-          </li>
-          <li>
-            <Link to="/logout">logout</Link>
-          </li>
-        </ul>
-        {props.currentUser ? (
-          <Switch>
-            <Route exact path={"/"} render={() => <Dashboard />}></Route>
-            <Route
-              path={"/logout"}
-              render={() => (
-                <Logout
-                  signOut={() => signOut}
-                  firebase={props.firebase}
-                  signupSubmit={signupSubmit}
-                  history={props.history}
-                />
-              )}
-            ></Route>
-          </Switch>
-        ) : (
-          <Switch>
-            <Route
-              exact
-              path={"/"}
-              render={() => (
-                <Login
-                  firebase={props.firebase}
-                  signupSubmit={signupSubmit}
-                  history={props.history}
-                />
-              )}
-            ></Route>
-            <Route
-              path={"/signup"}
-              render={() => (
-                <SignUp
-                  firebase={props.firebase}
-                  signupSubmit={signupSubmit}
-                  history={props.history}
-                />
-              )}
-            ></Route>
-          </Switch>
-        )}
-      </div>
+      {props.currentUser ? (
+        <Switch>
+          <Route
+            exact
+            path={"/"}
+            render={() => (
+              <Dashboard
+                firebase={props.firebase}
+                signupSubmit={signupSubmit}
+                history={props.history}
+              />
+            )}
+          ></Route>
+          <Route
+            path={"/logout"}
+            render={() => (
+              <Logout
+                signOut={signOut}
+                firebase={props.firebase}
+                history={props.history}
+              />
+            )}
+          ></Route>
+        </Switch>
+      ) : (
+        <Switch>
+          <Route
+            exact
+            path={"/"}
+            render={() => (
+              <Login
+                firebase={props.firebase}
+                loginSubmit={loginSubmit}
+                history={props.history}
+                socialLogin={socialLogin}
+              />
+            )}
+          ></Route>
+          <Route
+            path={"/signup"}
+            render={() => (
+              <SignUp
+                firebase={props.firebase}
+                signupSubmit={signupSubmit}
+                history={props.history}
+              />
+            )}
+          ></Route>
+        </Switch>
+      )}
     </Router>
   );
 }
