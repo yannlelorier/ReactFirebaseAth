@@ -1,9 +1,35 @@
 import "./styles.css";
+import { useEffect } from "react";
+import Index from "./paginas/Index";
+import FirebaseFunctions from "./funciones/FirebaseFunctions";
+import Loading from "./components/Loading";
 
-export default function App() {
+export default function App(props) {
+  const { firebase, currentUser, getCurrentUser } = FirebaseFunctions(props);
+
+  useEffect(() => {
+    if (firebase) {
+      firebase.auth().onAuthStateChanged((authUser) => {
+        if (authUser) {
+          getCurrentUser(authUser.email);
+        } else {
+          getCurrentUser("Cargando...");
+        }
+      });
+    }
+  }, []);
+
   return (
     <div className="App">
-      <p>Hola Mundo</p>
+      {currentUser === "Cargando..." ? (
+        <Loading />
+      ) : (
+        <Index
+          currentUser={currentUser}
+          getFirebase={props.getFirebase}
+          history={props.history}
+        />
+      )}
     </div>
   );
 }
