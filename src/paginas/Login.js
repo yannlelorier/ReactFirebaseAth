@@ -15,7 +15,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleIcon from "@mui/icons-material/Google";
 import getFirebase from "../firebase/firebaseconfiguration";
 import { GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -26,9 +26,7 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright ©️ "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
+
       {new Date().getFullYear()}
       {"."}
     </Typography>
@@ -47,7 +45,7 @@ export default function SignIn(props) {
     // eslint-disable-next-line no-console
     console.log({
       email: data.get("email"),
-      password: data.get("password")
+      password: data.get("password"),
     });
   };
 
@@ -60,7 +58,7 @@ export default function SignIn(props) {
             marginTop: 8,
             display: "flex",
             flexDirection: "column",
-            alignItems: "center"
+            alignItems: "center",
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -122,9 +120,9 @@ export default function SignIn(props) {
             <Grid container>
               <Grid item xs></Grid>
               <Grid item>
-                <Link to="/signup" variant="body2">
+                {<Box component={Link} to="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
-                </Link>
+                </Box>}
               </Grid>
             </Grid>
           </Box>

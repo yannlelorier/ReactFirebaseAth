@@ -51,12 +51,12 @@ export default function SignUp(props) {
           );
         console.log("user", user);
         alert(`Welcome ${user}!`);
+        props.history.push("/dashboard");
       }
     } catch (error) {
       console.log("error", error);
       alert(error.message);
     }
-    props.history.push("/dashboard");
   };
 
   return (

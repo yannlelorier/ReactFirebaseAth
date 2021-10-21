@@ -6,7 +6,7 @@ import SignUp from "./Signup";
 import Login from "./Login";
 import getFirebase from "../firebase/firebaseconfiguration";
 
-export default function Navigate(props) {
+export default function Index(props) {
   const firebase = getFirebase();
 
   const socialLogin = async (props) => {

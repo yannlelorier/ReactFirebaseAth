@@ -3,14 +3,15 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCe83_7-DkwINIa4vEugz4CaKXXJdKw_tc",
-  authDomain: "servicio-14be9.firebaseapp.com",
-  databaseURL: "https://servicio-14be9.firebaseio.com",
-  projectId: "servicio-14be9",
-  storageBucket: "servicio-14be9.appspot.com",
-  messagingSenderId: "306324073818",
-  appId: "1:306324073818:web:d71ccacf689ed569"
+  apiKey: process.env.REACT_APP_KEY,
+  authDomain: process.env.REACT_APP_DOM,
+  projectId: process.env.REACT_APP_PROJID,
+  storageBucket: process.env.REACT_APP_STORB,
+  messagingSenderId: process.env.REACT_APP_MSGSENDID,
+  appId: process.env.REACT_APP_APPID,
+  measurementId: process.env.REACT_APP_MSRID,
 };
+
 
 let instance;
 
