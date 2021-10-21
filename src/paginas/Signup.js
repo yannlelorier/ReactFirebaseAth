@@ -51,7 +51,7 @@ export default function SignUp(props) {
           );
         console.log("user", user);
         alert(`Welcome ${user}!`);
-        props.history.push("/dashboard");
+        props.history.push("/");
       }
     } catch (error) {
       console.log("error", error);
