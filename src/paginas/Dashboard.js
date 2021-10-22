@@ -1,23 +1,20 @@
-import * as React from "react";
+import * as React from 'react';
+
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Chart from "../components/Chart";
 import Orders from "../components/Orders";
 import Deposits from "../components/Deposits";
-import { Link } from "react-router-dom";
 
-export default function DashBoard(params) {
+
+
+
+export default function Dashboard() {
+
   return (
-    <Container maxWidth="lg" sx={{ mt: 15 }}>
+        <Container maxWidth="lg" sx={{ mt: 15 }}>
       <Grid container spacing={3}>
-        <div>
-          <ul>
-            <li>
-              <Link to="/logout">logout</Link>
-            </li>
-          </ul>
-        </div>
         {/* Chart */}
         <Grid item xs={12} md={8} lg={9}>
           <Paper
